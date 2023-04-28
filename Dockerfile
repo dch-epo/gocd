@@ -1,5 +1,7 @@
 FROM golang:1.20 as build-stage
 
+LABEL org.opencontainers.image.source=https://github.com/dch-epo/gocd
+
 WORKDIR /app
 
 COPY go.mod go.sum ./
@@ -8,6 +10,7 @@ RUN go mod download
 COPY *.go ./
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o /hello-world
+
 
 
 FROM gcr.io/distroless/base-debian11 AS release-stage
